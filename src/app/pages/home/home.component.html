@@ -1,0 +1,21 @@
+<div>
+  <div class="bg-blue-600 flex items-center justify-center p-5">
+    <h1 class="text-white">Todo app</h1>
+  </div>
+  <div class="grid grid-cols-3 gap-4 p-4">
+    @for (item of todos$ | async; track item.id) {
+      <app-todo-component [todo]="item" />
+    } @empty {
+      <p>L'elenco è vuoto o l'Observable non ha ancora emesso dati.</p>
+    }
+  </div>
+  <div class="flex items-center justify-center">
+    <div
+      (click)="handleClick()"
+      class="cursor-pointer hover:bg-blue-400 rounded-full size-8 flex items-center justify-center bg-blue-500 text-white"
+    >
+      +
+    </div>
+  </div>
+  <app-modal (closeModal)="openModal.set(false)" [isOpen]="openModal()" />
+</div>
