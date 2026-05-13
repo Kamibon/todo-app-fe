@@ -38,6 +38,8 @@ describe('TodosService', () => {
         status: Status.COMPLETED,
         expirationDate: new Date(),
         priority: Priority.LOW,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         id: 2,
@@ -46,6 +48,8 @@ describe('TodosService', () => {
         status: Status.EXPIRED,
         expirationDate: new Date(),
         priority: Priority.MEDIUM,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
     ];
 
@@ -74,6 +78,8 @@ describe('TodosService', () => {
       status: Status.INCOMPLETE,
       expirationDate: new Date(),
       priority: Priority.LOW,
+      createdAt:new Date(),
+      updatedAt: new Date()
     };
 
     service.addTodo(newTodo).subscribe((todo) => {

@@ -1,14 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HomeComponent } from './home.component';
-import { StoreModule } from '@ngrx/store';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { TodoComponentComponent } from '../../components/todo-component/todo-component.component';
-import * as TodoActions from '../../state/todo.actions';
+/// <reference types="jasmine" />
 import { CommonModule } from '@angular/common';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Priority, Status, Todo } from '../../models/todo';
 import { TodosService } from '../../services/todo-service.service';
+import * as TodoActions from '../../state/todo.actions';
 import * as TodoSelectors from '../../state/todo.selectors';
-import { HttpTestingController } from '@angular/common/http/testing';
+import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -24,6 +22,8 @@ describe('HomeComponent', () => {
       status: Status.COMPLETED,
       priority: Priority.HIGH,
       expirationDate: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
       id: 2,
@@ -32,13 +32,15 @@ describe('HomeComponent', () => {
       status: Status.EXPIRED,
       priority: Priority.LOW,
       expirationDate: new Date(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
   ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [],
-      imports: [CommonModule, HomeComponent, StoreModule.forRoot({})],
+      imports: [CommonModule, HomeComponent],
       providers: [
         provideMockStore({
           initialState: {

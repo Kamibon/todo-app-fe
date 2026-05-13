@@ -1,21 +1,46 @@
-<div>
-  <div class="bg-blue-600 flex items-center justify-center p-5">
-    <h1 class="text-white">Todo app</h1>
-  </div>
-  <div class="grid grid-cols-3 gap-4 p-4">
-    @for (item of todos$ | async; track item.id) {
-      <app-todo-component [todo]="item" />
-    } @empty {
-      <p>L'elenco è vuoto o l'Observable non ha ancora emesso dati.</p>
-    }
-  </div>
-  <div class="flex items-center justify-center">
-    <div
-      (click)="handleClick()"
-      class="cursor-pointer hover:bg-blue-400 rounded-full size-8 flex items-center justify-center bg-blue-500 text-white"
-    >
-      +
+<div class="min-h-screen bg-gray-50 flex flex-col">
+
+  <header class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-center">
+      <h1 class="text-xl font-semibold text-gray-800">Todo app</h1>
     </div>
-  </div>
-  <app-modal (closeModal)="openModal.set(false)" [isOpen]="openModal()" />
+  </header>
+
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+
+      @for (item of todos$ | async; track item.id) {
+        <app-todo-component [todo]="item" />
+      } @empty {
+        <div class="col-span-full text-center py-16">
+          <p class="text-gray-500 text-sm">
+            Nessun todo disponibile
+          </p>
+        </div>
+      }
+
+    </div>
+
+  </main>
+
+  <button
+    type="button"
+    (click)="handleClick()"
+    class="cursor-pointer fixed bottom-6 right-6 size-14 rounded-full
+           bg-blue-500 text-white shadow-lg
+           flex items-center justify-center
+           hover:bg-blue-600 hover:scale-110
+           active:scale-95 transition-all
+           focus:outline-none focus:ring-2 focus:ring-blue-300"
+    aria-label="Aggiungi todo"
+  >
+    <span class="text-3xl leading-none">+</span>
+  </button>
+
+  <app-modal
+    (closeModal)="openModal.set(false)"
+    [isOpen]="openModal()"
+  />
+
 </div>

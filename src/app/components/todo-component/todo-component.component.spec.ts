@@ -18,6 +18,8 @@ describe('TodoComponentComponent', () => {
     status: Status.INCOMPLETE,
     priority: Priority.HIGH,
     expirationDate: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   };
 
   beforeEach(async () => {
