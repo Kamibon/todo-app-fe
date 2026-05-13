@@ -5,6 +5,7 @@ import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import * as TodoActions from './todo.actions';
 import { TodosService } from '../services/todo-service.service';
 import { Store } from '@ngrx/store';
+import { Todo } from '../models/todo';
 
 @Injectable()
 export class TodoEffects {
@@ -40,6 +41,21 @@ export class TodoEffects {
           catchError((error) => of(TodoActions.loadTodosFailure({ error }))),
         ),
       ),
+    ),
+  );
+
+  updateTodo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TodoActions.updateTodo),
+      switchMap((action) =>
+        this.todoService.updateTodo(action.todo).pipe(
+          map((todo: Todo) => TodoActions.updateTodoSuccess({ todo })),
+          catchError((error) => of(TodoActions.updateTodoFailure({ error }))),
+        ),
+      ),
+      tap(() => {
+        this.store.dispatch(TodoActions.loadTodos());
+      }),
     ),
   );
 

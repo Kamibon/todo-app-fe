@@ -5,9 +5,9 @@ export enum Status {
 }
 
 export enum Priority {
-  LOW,
-  MEDIUM,
-  HIGH,
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
 }
 
 export interface Todo {
@@ -22,16 +22,10 @@ export interface Todo {
   status: Status;
 
   priority: Priority;
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
-export interface CreateTodoRequest {
-  title: string;
-
-  description: string;
-
-  expirationDate: Date;
-
-  status: Status;
-
-  priority: Priority;
-}
+export type CreateTodoRequest = Omit<Todo, 'id' | 'createdAt' | 'updatedAt'>;

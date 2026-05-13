@@ -1,30 +1,64 @@
 <div
-  class="rounded-3xl bg-gray-300 border border-blue-600 flex flex-col px-2 py-3 shadow-md"
+  class="group rounded-3xl border bg-white/80 backdrop-blur-sm p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+  [ngClass]="{
+    'border-red-500': todo().priority === Priority.HIGH,
+    'border-emerald-500': todo().priority === Priority.LOW,
+    'border-amber-400 text-black': todo().priority === Priority.MEDIUM
+  }"
 >
-  <div class="flex justify-between items-center">
-    <span class="font-bold italic">{{ todo().title }}</span>
-    <div
-      class="rounded-full size-5 flex items-center justify-center text-white text-base"
-      [ngClass]="{
-        'bg-red-700': todo().status === Status.EXPIRED,
-        'bg-green-600': todo().status === Status.COMPLETED,
-        'bg-orange-400': todo().status === Status.INCOMPLETE,
-      }"
-    >
-      {{
-        todo().status === Status.EXPIRED
-          ? "X"
-          : todo().status === Status.COMPLETED
-            ? "✓"
-            : "-"
-      }}
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="text-lg font-semibold text-gray-800">
+        {{ clippedTitle() }}
+      </h3>
+
+      <p class="mt-1 text-sm text-gray-500">
+        {{ todo().description }}
+      </p>
+    </div>
+
+    <div class="flex gap-2 items-center">
+      <button
+        (click)="updateThisTodo(todoCompleted())"
+        class="cursor-pointer hover:scale-120"
+      >
+        ✏️
+      </button>
+      <div
+        class="flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold text-white shadow-md"
+        [ngClass]="{
+          'bg-red-500': todo().status === Status.EXPIRED,
+          'bg-emerald-500': todo().status === Status.COMPLETED,
+          'bg-amber-400 text-black': todo().status === Status.INCOMPLETE,
+        }"
+      >
+        {{
+          todo().status === Status.EXPIRED
+            ? "✕"
+            : todo().status === Status.COMPLETED
+              ? "✓"
+              : "•"
+        }}
+      </div>
     </div>
   </div>
-  <span>{{ todo().description }} </span>
-  <button
-    (click)="deleteThisTodo()"
-    class="cursor-pointer rounded-2xl bg-red-600 hover:bg-red-500 mt-2 px-2 py-1 text-white"
-  >
-    Elimina
-  </button>
+
+  <div class="mt-5 flex gap-3">
+    <button
+      [disabled]="todo().status === Status.COMPLETED"
+      class="flex-1 cursor-pointer rounded-2xl bg-emerald-500 px-4 py-2 font-medium text-white transition-colors duration-200 hover:bg-emerald-400 active:scale-95 disabled:cursor-not-allowed disabled:bg-gray-400"
+      (click)="updateThisTodo(todoCompleted())"
+    >
+      <span class="md:hidden">✔</span>
+      <span class="hidden md:inline">Completa</span>
+    </button>
+
+    <button
+      (click)="deleteThisTodo()"
+      class="flex-1 cursor-pointer rounded-2xl bg-red-500 px-4 py-2 font-medium text-white transition-colors duration-200 hover:bg-red-400 active:scale-95"
+    >
+      <span class="md:hidden">🗑️</span>
+      <span class="hidden md:inline">Elimina</span>
+    </button>
+  </div>
 </div>

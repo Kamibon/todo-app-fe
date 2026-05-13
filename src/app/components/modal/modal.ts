@@ -32,7 +32,6 @@ export class Modal {
       },
     },
   });
-
   onSubmit() {
     const formData = this.todoModel();
     //@ts-ignore

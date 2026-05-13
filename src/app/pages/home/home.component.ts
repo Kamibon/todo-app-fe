@@ -1,20 +1,13 @@
-import {
-  Component,
-  effect,
-  inject,
-  OnInit,
-  signal,
-  Signal,
-} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Modal } from '../../components/modal/modal';
 import { TodoComponentComponent } from '../../components/todo-component/todo-component.component';
 import { CreateTodoRequest, Priority, Status, Todo } from '../../models/todo';
-import { Store } from '@ngrx/store';
 import { TodosService } from '../../services/todo-service.service';
-import { Observable } from 'rxjs';
 import * as TodoActions from '../../state/todo.actions';
 import * as TodoSelectors from '../../state/todo.selectors';
-import { CommonModule } from '@angular/common';
-import { Modal } from '../../components/modal/modal';
 
 @Component({
   selector: 'app-home',
@@ -52,7 +45,6 @@ export class HomeComponent implements OnInit {
 
   handleClick() {
     this.openModal.set(true);
-    //this.store.dispatch(TodoActions.addTodo({ todo: this.requestTodo }));
   }
 
   toggleComplete(todo: Todo) {
